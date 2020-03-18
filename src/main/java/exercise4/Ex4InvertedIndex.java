@@ -16,12 +16,16 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 public class Ex4InvertedIndex {
 
-	public static class Ex4Mapper extends Mapper<Object, Text, Text, LongWritable> {
+	public static class Ex4Mapper extends Mapper<LongWritable, Text, Text, LongWritable> {
 
 		private Text word = new Text();
 
-		public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
-			//TODO mapper code
+		public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+			StringTokenizer itr = new StringTokenizer(value.toString());
+			while (itr.hasMoreTokens()) {
+				word.set(itr.nextToken());
+				context.write(word, key);
+			}
 		}
 	}
 
@@ -31,8 +35,11 @@ public class Ex4InvertedIndex {
 				throws IOException, InterruptedException {
 
 			TreeSet<Long> offsets = new TreeSet<Long>();
-
-			//TODO reducer code
+			
+			for (LongWritable val : values) {
+				offsets.add(val.get());
+			}
+			context.write(key, new Text(offsets.toString()));
 		}
 	}
 

@@ -15,4 +15,4 @@ include 'api'
 include 'services:webservice'
 */
 
-rootProject.name = 'BD-201-mapreduce'
+rootProject.name = '201-mapreduce-lory696'

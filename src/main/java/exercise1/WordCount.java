@@ -1,6 +1,7 @@
 package exercise1;
 import java.io.IOException;
 import java.util.StringTokenizer;
+import java.util.function.IntUnaryOperator;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -67,6 +68,7 @@ public class WordCount {
 			}
 		}
 		
+		job.setCombinerClass(IntSumReducer.class);
 		job.setReducerClass(IntSumReducer.class);
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(IntWritable.class);
